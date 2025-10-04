@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الموقع الرياضي</title>
+    <style>
+        /* CSS Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* متغيرات الألوان */
+        :root {
+            --primary-black: #121212;
+            --secondary-black: #1e1e1e;
+            --gold: #d4af37;
+            --gold-light: #f0d37a;
+            --red: #c41e3a;
+            --red-light: #e63946;
+            --white: #f5f5f5;
+            --gray: #8a8a8a;
+        }
+
+        body {
+            background-color: var(--primary-black);
+            color: var(--white);
+            line-height: 1.6;
+        }
+
+        /* شريط التنقل */
+        header {
+            background: linear-gradient(to right, var(--primary-black), var(--secondary-black));
+            padding: 1rem 2rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--gold), var(--red));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-black);
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+
+        .logo-text {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--gold), var(--red));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        /* لوحة التحكم */
+        .control-panel {
+            background-color: var(--secondary-black);
+            padding: 1.5rem;
+            margin: 1rem auto;
+            max-width: 1400px;
+            border-radius: 12px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .control-title {
+            color: var(--gold);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .input-field {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .input-field label {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .input-field input {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 8px;
+            background-color: var(--primary-black);
+            color: var(--white);
+            font-size: 1rem;
+        }
+
+        .input-field input:focus {
+            outline: none;
+            border-color: var(--gold);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(to right, var(--gold), var(--gold-light));
+            color: var(--primary-black);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(to right, var(--red), var(--red-light));
+            color: var(--white);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        /* قسم الأخبار */
+        .news-section {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .news-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--gold);
+        }
+
+        .news-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--gold);
+            margin-right: 15px;
+        }
+
+        .news-title-icon {
+            color: var(--red);
+            font-size: 1.5rem;
+        }
+
+        .news-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 25px;
+        }
+
+        .news-placeholder {
+            background-color: var(--secondary-black);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .news-placeholder:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .placeholder-icon {
+            font-size: 3rem;
+            color: var(--gold-light);
+            margin-bottom: 1rem;
+        }
+
+        .placeholder-text {
+            color: var(--gray);
+            font-size: 1.1rem;
+        }
+
+        /* بطاقة الأخبار */
+        .news-card {
+            background-color: var(--secondary-black);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: none;
+        }
+
+        .news-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .news-image {
+            width: 100%;
+            height: 200px;
+            background-color: var(--primary-black);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray);
+            font-size: 1.2rem;
+        }
+
+        .news-content {
+            padding: 1.5rem;
+        }
+
+        .news-category {
+            display: inline-block;
+            background: linear-gradient(to right, var(--red), var(--red-light));
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+        }
+
+        .news-headline {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+            line-height: 1.4;
+            color: var(--white);
+        }
+
+        .news-summary {
+            color: var(--gray);
+            font-size: 0.95rem;
+            margin-bottom: 1.2rem;
+            line-height: 1.5;
+        }
+
+        .news-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+            color: var(--gray);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 0.8rem;
+        }
+
+        .news-date {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .news-source {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* التذييل */
+        footer {
+            background-color: var(--secondary-black);
+            padding: 2rem;
+            text-align: center;
+            margin-top: 3rem;
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .footer-text {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        /* تصميم متجاوب */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .logo {
+                justify-content: center;
+            }
+
+            .news-container {
+                grid-template-columns: 1fr;
+            }
+
+            .news-section {
+                padding: 0 1rem;
+            }
+
+            .control-panel {
+                margin: 1rem;
+                padding: 1rem;
+            }
+
+            .input-group {
+                flex-direction: column;
+            }
+
+            .input-field {
+                min-width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo-text {
+                font-size: 1.5rem;
+            }
+
+            .news-title {
+                font-size: 1.5rem;
+            }
+
+            .news-headline {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- رأس الصفحة -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <div class="logo-icon">R</div>
+                <div class="logo-text">الموقع الرياضي</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- لوحة التحكم -->
+    <section class="control-panel">
+        <h3 class="control-title">إعدادات بوت التليجرام</h3>
+        <div class="input-group">
+            <div class="input-field">
+                <label for="botToken">توكن البوت</label>
+                <input type="text" id="botToken" placeholder="أدخل توكن البوت هنا...">
+            </div>
+            <div class="input-field">
+                <label for="chatId">معرف الدردشة (Chat ID)</label>
+                <input type="text" id="chatId" placeholder="أدخل معرف الدردشة هنا...">
+            </div>
+        </div>
+        <div class="button-group">
+            <button class="btn btn-primary" onclick="saveSettings()">حفظ الإعدادات</button>
+            <button class="btn btn-secondary" onclick="testConnection()">اختبار الاتصال</button>
+            <button class="btn btn-secondary" onclick="showSampleNews()">عرض أخبار تجريبية</button>
+        </div>
+    </section>
+
+    <!-- قسم الأخبار -->
+    <section class="news-section">
+        <div class="news-header">
+            <span class="news-title-icon">📰</span>
+            <h2 class="news-title">آخر الأخبار الرياضية</h2>
+        </div>
+        
+        <div class="news-container" id="newsContainer">
+            <!-- مساحة فارغة للعرض - ستظهر عند عدم وجود أخبار -->
+            <div class="news-placeholder">
+                <div class="placeholder-icon">⚽</div>
+                <p class="placeholder-text">لا توجد أخبار حالياً</p>
+                <p class="placeholder-text">سيتم عرض آخر الأخبار هنا فور وصولها</p>
+            </div>
+            
+            <!-- قالب بطاقة الأخبار (مخفي حالياً) -->
+            <div class="news-card" id="newsCardTemplate" style="display: none;">
+                <div class="news-image">صورة الخبر</div>
+                <div class="news-content">
+                    <span class="news-category">كرة القدم</span>
+                    <h3 class="news-headline">عنوان الخبر الرياضي</h3>
+                    <p class="news-summary">ملخص موجز عن الخبر الرياضي يظهر هنا مع التفاصيل الأساسية.</p>
+                    <div class="news-meta">
+                        <div class="news-date">
+                            <span>📅</span>
+                            <span>01 يناير 2023</span>
+                        </div>
+                        <div class="news-source">
+                            <span>🔗</span>
+                            <span>المصدر</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- تذييل الصفحة -->
+    <footer>
+        <p class="footer-text">جميع الحقوق محفوظة © 2023 - الموقع الرياضي</p>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // دالة لتحديث الأخبار - ستستقبل بيانات من بوت تيليجرام
+        function updateNews(newsData) {
+            const newsContainer = document.getElementById('newsContainer');
+            
+            // إخفاء العنصر النائب إذا كانت هناك أخبار
+            const placeholder = newsContainer.querySelector('.news-placeholder');
+            if (newsData && newsData.length > 0) {
+                placeholder.style.display = 'none';
+                
+                // مسح الأخبار القديمة (إذا كانت موجودة)
+                const existingCards = newsContainer.querySelectorAll('.news-card:not(#newsCardTemplate)');
+                existingCards.forEach(card => card.remove());
+                
+                // إضافة الأخبار الجديدة
+                newsData.forEach(newsItem => {
+                    // استنساخ قالب البطاقة
+                    const template = document.getElementById('newsCardTemplate');
+                    const newCard = template.cloneNode(true);
+                    newCard.id = ''; // إزالة المعرف لتجنب التكرار
+                    newCard.style.display = 'block';
+                    
+                    // ملء البيانات
+                    newCard.querySelector('.news-category').textContent = newsItem.category || 'رياضة';
+                    newCard.querySelector('.news-headline').textContent = newsItem.title || 'عنوان الخبر';
+                    newCard.querySelector('.news-summary').textContent = newsItem.summary || 'ملخص الخبر';
+                    newCard.querySelector('.news-date span:last-child').textContent = newsItem.date || 'غير محدد';
+                    newCard.querySelector('.news-source span:last-child').textContent = newsItem.source || 'مصدر غير معروف';
+                    
+                    // إضافة البطاقة إلى الحاوية
+                    newsContainer.appendChild(newCard);
+                });
+            } else {
+                // إظهار العنصر النائب إذا لم تكن هناك أخبار
+                placeholder.style.display = 'block';
+                
+                // إخفاء جميع بطاقات الأخبار
+                const existingCards = newsContainer.querySelectorAll('.news-card:not(#newsCardTemplate)');
+                existingCards.forEach(card => card.remove());
+            }
+        }
+
+        // دالة لحفظ إعدادات البوت
+        function saveSettings() {
+            const botToken = document.getElementById('botToken').value;
+            const chatId = document.getElementById('chatId').value;
+            
+            if (botToken && chatId) {
+                localStorage.setItem('telegramBotToken', botToken);
+                localStorage.setItem('telegramChatId', chatId);
+                alert('تم حفظ الإعدادات بنجاح!');
+            } else {
+                alert('يرجى ملء جميع الحقول المطلوبة.');
+            }
+        }
+
+        // دالة لتحميل الإعدادات المحفوظة
+        function loadSettings() {
+            const savedToken = localStorage.getItem('telegramBotToken');
+            const savedChatId = localStorage.getItem('telegramChatId');
+            
+            if (savedToken) {
+                document.getElementById('botToken').value = savedToken;
+            }
+            if (savedChatId) {
+                document.getElementById('chatId').value = savedChatId;
+            }
+        }
+
+        // دالة لاختبار الاتصال بالبوت
+        function testConnection() {
+            const botToken = document.getElementById('botToken').value;
+            const chatId = document.getElementById('chatId').value;
+            
+            if (!botToken || !chatId) {
+                alert('يرجى إدخال التوكن ومعرف الدردشة أولاً');
+                return;
+            }
+            
+            // محاكاة اختبار الاتصال (في الواقع سترسل طلب API)
+            alert(`تم اختبار الاتصال:\nالتوكن: ${botToken.substring(0, 10)}...\nمعرف الدردشة: ${chatId}\n\nملاحظة: هذا اختبار وهمي، في التطبيق الفعلي سيتم إرسال طلب حقيقي للبوت.`);
+        }
+
+        // دالة لعرض أخبار تجريبية
+        function showSampleNews() {
+            const sampleNews = [
+                {
+                    category: "كرة القدم",
+                    title: "فوز مثير للفريق المحلي في الدوري",
+                    summary: "حقق الفريق المحلي فوزاً مثيراً أمام منافسه التقليدي في مباراة جمعتهما مساء اليوم ضمن منافسات الجولة العاشرة من الدوري المحلي.",
+                    date: "15 نوفمبر 2023",
+                    source: "قناة الرياضة"
+                },
+                {
+                    category: "كرة السلة",
+                    title: "انتصار كبير للمنتخب في البطولة القارية",
+                    summary: "سجل المنتخب الوطني انتصاراً كبيراً في المباراة النهائية للبطولة القارية بعد تغلبه على المنتخب المنافس بنتيجة مريحة.",
+                    date: "14 نوفمبر 2023",
+                    source: "الموقع الرسمي"
+                },
+                {
+                    category: "التنس",
+                    title: "لاعب عربي يتأهل لنصف نهائي البطولة الدولية",
+                    summary: "تأهل اللاعب العربي الشاب إلى نصف النهائي بعد فوزه المثير في المباراة التي استمرت لأكثر من ثلاث ساعات.",
+                    date: "13 نوفمبر 2023",
+                    source: "رابطة التنس العالمية"
+                }
+            ];
+            
+            updateNews(sampleNews);
+        }
+
+        // دالة لاستقبال الأخبار من البوت (ستتم استدعاؤها من قبل البوت)
+        function receiveNewsFromBot(newsData) {
+            updateNews(newsData);
+        }
+
+        // تحميل الإعدادات عند بدء التشغيل
+        document.addEventListener('DOMContentLoaded', function() {
+            loadSettings();
+            
+            // يمكنك تفعيل هذا السطر لعرض بيانات الاختبار تلقائياً
+            // showSampleNews();
+        });
+
+        // جعل الدالة متاحة عالمياً للاستدعاء من قبل البوت
+        window.updateNews = updateNews;
+        window.receiveNewsFromBot = receiveNewsFromBot;
+    </script>
+</body>
+</html>
